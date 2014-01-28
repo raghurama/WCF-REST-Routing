@@ -16,33 +16,33 @@ namespace <DataRepository>
 
         public TransactionResult<SOWDetails> GetSOWDetails(string SOWID, string year)
         {
-            var transaction = StrongDb.LookupMultipleCollections(Db.SProcs.GetSOWdetail.Name,
+            var transaction = StrongDb.LookupMultipleCollections(<SPNAME>,
                  (databaseWrapper, dbCommand) =>
                  {
-                     databaseWrapper.AddInParameter(dbCommand, Db.SProcs.GetSOWdetail.Params.SOWID, DbType.String, SOWID);
-                     databaseWrapper.AddInParameter(dbCommand, Db.SProcs.GetSOWdetail.Params.Year, DbType.String, year);
+                     databaseWrapper.AddInParameter(dbCommand, "param1", DbType.String, SOWID);
+                     databaseWrapper.AddInParameter(dbCommand, "param2", DbType.String, year);
                  },
                    
                     (dataReader) => new FPCForecast
                     {
-                        SOWID = dataReader["SOW_ID"].ParseString(),
-                        SOWName = dataReader["SOW_NAME"].ParseString(),
-                        SOWStartDate = dataReader["START_DATE"].ParseString(),
+                        SOWID = dataReader["name1"].ParseString(), //use c# extension method here
+                        SOWName = dataReader["name2"].ParseString(),
+                        SOWStartDate = dataReader["name3"].ParseString(),
                         ...
                         ...
                     }
                      );
 
             if (transaction.Status == ResultStatus.Error)
-                return new TransactionResult<SOWDetails>(ResultStatus.Error, null, transaction.Message);
+                return new TransactionResult<class>(ResultStatus.Error, null, transaction.Message);
 
             if (transaction.Data == null)
                 return new TransactionResult<SOWDetails>(ResultStatus.Error, null,
-                    string.Format("Get SOW details failed for SOW ID : {0} & Year : {1}", SOWID, year));
+                    string.Format(""));
 
             if (transaction.Data.Count() == 0)
                 return new TransactionResult<SOWDetails>(ResultStatus.Error, null,
-                    string.Format("Get SOW details failed for SOW ID : {0} & Year : {1}", SOWID, year));
+                    string.Format(""));
 
             var sowLifeCycle = transaction.Data[0].Cast<SOWLifeCycle>().ToList();
             var fpcForecast = transaction.Data[1].Cast<FPCForecast>().ToList();

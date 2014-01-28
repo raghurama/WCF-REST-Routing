@@ -1,8 +1,8 @@
 $(document).ready(function () {
     try {
-        setvariables here;
-        SOWDetails.CompileTemplates();
-        SOWDetails.GetSOWInfo();
+        //setvariables here;
+        SOWDetails.CompileTemplates(); //compile the jquery templates before binding
+        SOWDetails.GetSOWInfo();    //data call here in DOM ready event
     }
     catch (Err) {
        
@@ -10,7 +10,7 @@ $(document).ready(function () {
 });
 
 var GlobalVars = {
-    list of global variables here;
+    //list of global variables here;
 };
 
 var SOWDetails = {
@@ -26,10 +26,10 @@ var SOWDetails = {
 
     },
     MakeAjaxCall: function () {
-        var sowId = $('#hdnSOWID').val();
-        var year = GlobalVars.year;
+        var sowId = $('#<id>').val();
+        var year ="2014";
         $.ajax({
-            url: "SOWDetails/" + sowId + "/" + year,
+            url: "SOWDetails/" + sowId + "/" + year, //call WCF REST service here
             type: "GET",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
@@ -48,18 +48,18 @@ var SOWDetails = {
             error: function (jqXHR, textStatus, errorThrown) {
                 var responseText = jqXHR.responseText;
                 if (typeof (responseText) != 'undefined' &&
-                            (responseText.toString().toLowerCase().indexOf("siteminder") >= 0
-                                    || responseText.toString().toLowerCase().indexOf("html") >= 0)) {
-                    SOWDetails.RedirectOnTimeout();
+                            (responseText.toString().toLowerCase().indexOf("<any text>") >= 0) {
+                    SOWDetails.RedirectOnTimeout(); //handle timeout if any here
                 }
-                else if (jqXHR == null || textStatus === 'timeout') {
+                else if (jqXHR == null || textStatus === 'timeout') { //handle session expire here
                     alert('Session expired or timed out: Restart Browser');
                     SOWDetails.RedirectOnTimeout();
                     return false;
                 }
                 else {
-                    alert("Request Error /SOWDetail/MakeAjaxCall/. \njqXHR: " + jqXHR + "\n textStatus: " + textStatus + "\n errorThrown: " + errorThrown);
-                    var params = "SOW ID: " + sowId + " Year: " + year;
+                    //handle request error here
+                    alert("Request Error /MakeAjaxCall/. \njqXHR: " + jqXHR + "\n textStatus: " + textStatus + "\n errorThrown: " + errorThrown);
+                    var params = "";
                     SOWDetails.SendMailOnException(params);
                 }
             }
@@ -157,10 +157,10 @@ var SOWDetails = {
         }
     },
     HandleRedirectionAndStyles: function () {
-        if (GlobalVars.Page == 'MPF') {
-            $('#divAssignedProjects').css('height', '350px');
-            $('#acrMPFLink').css('cursor', 'auto').css('textDecoration', 'none');
-            document.getElementById('acrMPFLink').onclick = function () {
+        if (GlobalVars.Page == '<anypagename>') {
+            $('#<id>').css('height', '350px');
+            $('#<id>').css('cursor', 'auto').css('textDecoration', 'none');
+            document.getElementById('<id>').onclick = function () {
                 return false;
             }
         }
@@ -206,10 +206,10 @@ var SOWDetails = {
         });
     },
     hideProgress: function () {
-        $("#FPCDetailsLoading").css("display", "none");
+        $("#<Loading>").css("display", "none");
     },
     showProgress: function () {
-        $("#FPCDetailsLoading").css("display", "block");
+        $("#<Loading>").css("display", "block");
     },
     ClearSOWTables: function (id, applyTrigger) {
         $('#' + id + ' tr').remove();

@@ -12,7 +12,7 @@ using Microsoft.Http;
 using Microsoft.Http.Headers;
 using System.Runtime.Serialization.Json;
 
-namespace PMTools.Services
+namespace <mynamespace>
 {
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
@@ -24,7 +24,7 @@ namespace PMTools.Services
         public ProjectsService()
         {
             ProjectRepo = ServiceBootStrapper.GetContainer().Resolve<IProjectsRepository>();
-            Logger = ServiceBootStrapper.GetContainer().Resolve<ICitiLogger>();
+            
         }
 
         [Description("Save Project PL.")]
@@ -37,9 +37,7 @@ namespace PMTools.Services
 
             if (saveProjectTransaction.Status == ResultStatus.Error)
             {
-                Logger.Error.Log(string.Format(
-                        "InternalServerError.\n Request: SaveProjectPL(projectId: {0}, perd: {1}, pl: {2}, costType: {3}, fpc: {4}, insertDelete: {5}, userID: {6}).\n TransactionMessage: {7}",
-                        projectId, perd, pl, costType, fpc, insertDelete, userID, saveProjectTransaction.Message));
+                Logger.Error.Log(string.Format());
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
             }
 
@@ -87,7 +85,7 @@ namespace PMTools.Services
         [WebGet(UriTemplate = "SOWDetails/{SowID}/{year}")]
         public SOWDetails GetSOWDetails(string SowID, string year)
         {
-            var sowDetailsTransaction = ProjectRepo.GetSOWDetails(SowID, year);
+            var sowDetailsTransaction = ProjectRepo.GetSOWDetails(SowID, year); //call data repository class here
 
             if (sowDetailsTransaction.Status == ResultStatus.Error)
             {

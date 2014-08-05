@@ -7,7 +7,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using Microsoft.Practices.Unity;
-using PMTools.Services.InputValidation;
+
 using Microsoft.Http;
 using Microsoft.Http.Headers;
 using System.Runtime.Serialization.Json;
@@ -27,41 +27,11 @@ namespace <mynamespace>
             
         }
 
-        [Description("Save Project PL.")]
-        [WebGet(UriTemplate = "SaveProjectPL/projectId={projectId}&perd={perd}&pl={pl}&costType={costType}&fpc={fpc}&insertDelete={insertDelete}&userID={userID}")]
-        public int? SaveProjectPL(string projectId, string perd, string pl, string costType, string fpc, string insertDelete, string userID)
-        {
-            ...
-            ...
-            var saveProjectTransaction = ProjectRepo.SaveProjectPL(plItem);
 
-            if (saveProjectTransaction.Status == ResultStatus.Error)
-            {
-                Logger.Error.Log(string.Format());
-                throw new WebFaultException(HttpStatusCode.InternalServerError);
-            }
-
-            return saveProjectTransaction.Data;
-        }
-
-        [Description("Get Project Summaries based on Filter Criteria.")]
-        [WebGet(UriTemplate = "Summaries/{employeeId}/?drilldown={drilldown}&roleId={roleId}&year={year}&statusIds={statusIds}&bow={bowFlag}")]
-        public IEnumerable<ProjectSummary> GetProjectSummaries(string employeeId, bool drilldown, string roleId, 
-                                                               string year, string statusIds, bool bowFlag)
-        {
-
-           ...
-           ...
-
-            //TODO: Artificially limited due to web service not supporting massive record sets. Work in progress
-            return projectSummariesTransaction.Data.Take(5000);
-        }
-
-
-        [Description("Gets a list of project using query on project id, project name and project manager.")]
-        [WebGet(UriTemplate = "Search/?projectId={projectId}&projectName={projectName}&projectManager={projectManager}")]
-        public IEnumerable<ProjectSearchList> GetProjects(string projectId, string projectName, 
-            string projectManager)
+        [Description("")]
+        [WebGet(UriTemplate = "Search/?projectId={p1}&projectName={p2}&projectManager={p3}")]
+        public IEnumerable<ProjectSearchList> GetProjects(string p1, string p2, 
+            string p3)
         {            
 
             var GetProjectsTransaction = ProjectRepo.ProjectSearchList(projectId, projectName,
@@ -72,20 +42,11 @@ namespace <mynamespace>
             return GetProjectsTransaction.Data;
         }
 
-        [Description("Gets a list of FPC Codes for a Project PL")]
-        [WebGet(UriTemplate = "ProjectFPCs/{projectId}/{projectPl}/{projectYear}")]
-        public IEnumerable<ProjectPL> GetProjectFPCs(string projectId, string projectPl, string projectYear)
-        {
-            var GetProjectsTransaction = ProjectRepo.ProjectFPCs(int.Parse(projectId), projectPl, projectYear);
-            IEnumerable<ProjectPL> plList = GetProjectsTransaction.Data.ToList();
-            return plList;
-        }
-
         [Description("Get SOW Details for SOW ID & Year.")]
-        [WebGet(UriTemplate = "SOWDetails/{SowID}/{year}")]
-        public SOWDetails GetSOWDetails(string SowID, string year)
+        [WebGet(UriTemplate = "<name>/{p1}/{p2}")]
+        public SOWDetails Get(string p1, string p2)
         {
-            var sowDetailsTransaction = ProjectRepo.GetSOWDetails(SowID, year); //call data repository class here
+            var sowDetailsTransaction = //call data repository class here
 
             if (sowDetailsTransaction.Status == ResultStatus.Error)
             {

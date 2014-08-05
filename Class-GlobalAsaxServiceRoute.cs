@@ -16,8 +16,8 @@ namespace <mynamespace>
 
         private static void ConfigureHttpWebServices()
         {
-            RouteTable.Routes.Add(new ServiceRoute("Projects", new WebServiceHostFactory(), typeof(ProjectsService)));
-            RouteTable.Routes.Add(new ServiceRoute("Resources", new WebServiceHostFactory(), typeof(ResourcesService)));
+            RouteTable.Routes.Add(new ServiceRoute("service 1", new WebServiceHostFactory(), typeof(ProjectsService)));
+            RouteTable.Routes.Add(new ServiceRoute("service 2", new WebServiceHostFactory(), typeof(ResourcesService)));
             ...
             ...
             

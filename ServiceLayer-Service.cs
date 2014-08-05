@@ -17,7 +17,7 @@ namespace <mynamespace>
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public class ProjectsService
+    public class <class name>
     {
         private IProjectsRepository ProjectRepo { get; set; }
         
@@ -29,34 +29,31 @@ namespace <mynamespace>
 
 
         [Description("")]
-        [WebGet(UriTemplate = "Search/?projectId={p1}&projectName={p2}&projectManager={p3}")]
+        [WebGet(UriTemplate = "Search/?projectId={p1}&....")]
         public IEnumerable<ProjectSearchList> GetProjects(string p1, string p2, 
             string p3)
         {            
 
-            var GetProjectsTransaction = ProjectRepo.ProjectSearchList(projectId, projectName,
-                projectManager);
+            var object = ProjectRepo.ProjectSearchList(...);
 
             ...
             ...
-            return GetProjectsTransaction.Data;
+            return object.Data;
         }
 
-        [Description("Get SOW Details for SOW ID & Year.")]
+        [Description("")]
         [WebGet(UriTemplate = "<name>/{p1}/{p2}")]
         public SOWDetails Get(string p1, string p2)
         {
-            var sowDetailsTransaction = //call data repository class here
+            var object = //call data repository class here
 
             if (sowDetailsTransaction.Status == ResultStatus.Error)
             {
-                Logger.Error.Log(string.Format(
-                    "Service Error.\n Request: GetSOWDetails(SOW ID: {0}).\n TransactionMessage: {1}",
-                    SowID, sowDetailsTransaction.Message));
+                Logger.Error.Log(.......);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
                 //throw new System.Exception(sowDetailsTransaction.Message);  // get exact error
             }
-            return sowDetailsTransaction.Data;
+            return object.Data;
         }
 
     }
